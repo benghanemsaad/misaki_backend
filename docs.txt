@@ -1,0 +1,45 @@
+python -m pip install Pillow
+python manage.py migrate
+
+
+--------------------- To Run Migrations -------------------
+python manage.py makemigrations
+python manage.py migrate
+
+-------------Create Objects PRODUCT IN DB-----------
+python manage.py shell
+from database.models import Product
+Product.objects.create(name="Prod1", price="144", quantity="14")
+
+-------------Create Objects ORDER IN DB-----------
+python manage.py shell
+>>> from database.models import Product
+>>> p = Product(name = "product com", price="18", quantity="75")
+>>> p.save()
+
+>>> from database.models import Client
+>>> c = Client(name = "Client 1")
+>>> c.save()
+
+
+>>> o = Order()
+>>> o.client_id = c.id
+>>> o.save()
+>>> o.products.add(p)
+>>> o.save()
+
+---------------------FROM URL API -----------------
+http://127.0.0.1:8000/orders/add/ in navigator
+{
+        "order_status": "CONFIRMED",
+        "client": 1,
+        "products": [
+            3, 1
+        ]
+}
+
+
+
+
+--------------------CORS ORIGIN---------------
+python -m pip install django-cors-headers
